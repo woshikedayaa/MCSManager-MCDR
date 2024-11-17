@@ -17,22 +17,25 @@ RUN apk add --no-cache wget &&\
 FROM eclipse-temurin:${EMBEDDED_JAVA_VERSION}-jdk
 
 ARG DEBIAN_FRONTEND=noninteractive
+
+
 RUN <<EOT
 apt update;
-apt install -y curl nodejs python3 python3-pip gcc python3-dev;
+apt install -y curl python3 python3-pip gcc python3-dev;
 curl -fsSL https://deb.nodesource.com/setup_20.x | bash;
 pip install --no-cache \
 mcdreforged pycryptodome colorlog \
 hjson APScheduler SQLAlchemy mcdreforged \
 pathspec psutil pytz xxhash zstandard \
 fastapi uvicorn requests simpleeval;
-
-apt clean && apt autoremove
+apt update;
+apt install -y nodejs;
+apt clean && apt autoremove;
 EOT
 
-WORKDIR /opt/mcsmanager/daemon
-
 COPY --from=builder /src/production-code/daemon/ /opt/mcsmanager/daemon/
+
+WORKDIR /opt/mcsmanager/daemon
 
 RUN npm install --production
 
