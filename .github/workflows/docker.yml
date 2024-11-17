@@ -26,8 +26,8 @@ jobs:
         run: |
           docker buildx build --load -f dockerfile/daemon.dockerfile \
           -t ${{ steps.meta_daemon.outputs.tags }} \
-          --build-args BUILDPLATFORM=linux/amd64 \
-          --build-args EMBEDDED_JAVA_VERSION=21
+          --build-arg BUILDPLATFORM=linux/amd64 \
+          --build-arg EMBEDDED_JAVA_VERSION=21
       - name: Save Docker image
         run: |
           docker save -o daemon.image.tar ${{ steps.meta_daemon.outputs.tags }}
@@ -57,7 +57,7 @@ jobs:
         run: |
           docker buildx build --load -f dockerfile/web.dockerfile \
           -t ${{ steps.meta_web.outputs.tags }} \
-          --build-args BUILDPLATFORM=linux/amd64 
+          --build-arg BUILDPLATFORM=linux/amd64 
       - name: Save Docker image
         run: |
           docker save -o web.image.tar ${{ steps.meta_web.outputs.tags }}
