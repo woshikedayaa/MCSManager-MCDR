@@ -23,7 +23,8 @@ RUN <<EOT
 apt update;
 apt install -y curl python3 python3-pip gcc python3-dev;
 curl -fsSL https://deb.nodesource.com/setup_20.x | bash;
-pip install --no-cache \
+mv /usr/lib/python3.12/EXTERNALLY-MANAGED /usr/lib/python3.12/EXTERNALLY-MANAGED.old
+pip install --no-cache-dir \
 mcdreforged pycryptodome colorlog \
 hjson APScheduler SQLAlchemy mcdreforged \
 pathspec psutil pytz xxhash zstandard \
